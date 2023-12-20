@@ -1,10 +1,5 @@
 import sys
 
-# Specifying the file path
-file_path = sys.argv[1]
-outFile = sys.argv[2]
-
-
 # Spefifying the different shapes available
 
 shapes = {
@@ -57,20 +52,26 @@ def addShapeToPlayfield(action, playfield):
 def prunePlayfield(playfield):
 
     for i in reversed(range(len(playfield))):
-        if all(playfield[i]):
+        if all(playfield[i]) or not any(playfield[i]):
             playfield.pop(i)
 
 
 
-# Open the file in read mode and run the Tetris Engine
-resultingHeight = []
-with open(file_path, 'r') as file:
-    # Read and process each line in the file
-    for line in file:
+if __name__ == "__main__":
+    
+    # Specifying the file path
+    file_path = sys.argv[1]
+    outFile = sys.argv[2]
 
-        #Process the action sequence and return the resulting height of the stack
-        resultingHeight.append(processLine(actionSequence = line.split(",")))
+    # Open the file in read mode and run the Tetris Engine
+    resultingHeight = []
+    with open(file_path, 'r') as file:
+        # Read and process each line in the file
+        for line in file:
 
-with open(outFile,'w') as o:
-    for line in resultingHeight:
-        o.write(str(line) + "\n")
+            #Process the action sequence and return the resulting height of the stack
+            resultingHeight.append(processLine(actionSequence = line.split(",")))
+
+    with open(outFile,'w') as o:
+        for line in resultingHeight:
+            o.write(str(line) + "\n")
